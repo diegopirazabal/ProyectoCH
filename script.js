@@ -40,10 +40,10 @@ submitBtn.addEventListener('click', function() {
    var totalAdultos = calcPrice(adultos.value, 199);
    var totalNinios = calcPrice(menores.value, 149);
 
-   var totalPrrecio = totalAdultos + totalNinios;
+   var totalPrecio = totalAdultos + totalNinios;
    var totalTickets = parseInt(adultos.value) + parseInt(menores.value) + parseInt(ninios.value);
 
-   respuesta(totalTickets, totalPrrecio);
+   respuesta(totalTickets, totalPrecio);
  }
 
 });

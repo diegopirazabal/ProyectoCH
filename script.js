@@ -1,18 +1,38 @@
-let titulo = document.getElementById("titulo");
 // Hago el fetch para traer la informacion de la banda y la inserto en el Titulo
-fetch("bandas.json")
-  .then((response) => response.json())
-  .then((data) => (titulo.innerHTML = "Tickets para " + data[0].banda));
 
 // Seteo todas las variables globales a utilizar
 let stock = 200;
+let titulo = document.getElementById("titulo");
 let adultos = document.getElementById("numAdultos");
 let menores = document.getElementById("numMenores");
 let ninios = document.getElementById("numNinios");
 let submitBtn = document.getElementById("submitButton");
 let output = document.getElementById("total");
 let loadingBar = document.getElementById("barraCarga");
+let buitres = document.getElementById("bui");
+let cuarteto = document.getElementById("cds");
+let ntvg = document.getElementById("ntvg");
 
+//Titulo
+titulo.innerHTML = "Bienvenido, para comprar tickets selecciona un artista";
+//Eleccion de artista
+ntvg.addEventListener("click", () => {
+  fetch("bandas.json")
+    .then((response) => response.json())
+    .then((data) => (titulo.innerHTML = "Tickets para " + data[0].banda));
+});
+
+cuarteto.addEventListener("click", () => {
+  fetch("bandas.json")
+    .then((response) => response.json())
+    .then((data) => (titulo.innerHTML = "Tickets para " + data[1].banda));
+});
+
+buitres.addEventListener("click", () => {
+  fetch("bandas.json")
+    .then((response) => response.json())
+    .then((data) => (titulo.innerHTML = "Tickets para " + data[2].banda));
+});
 
 // Funcion que almacena el nombre ingresado por el usuario en el LocalStorage
 function guardarNombre(nombre) {
@@ -103,11 +123,15 @@ submitBtn.addEventListener("click", function () {
           respuesta(totalTickets, totalPrecio);
         }, 2000);
       } else {
-        alert(
-          "Lamentablemente no hay tickets suficientes. Quedan: " +
+        let comprador = localStorage.getItem("comprador")
+        Swal.fire(
+          "Error",
+          comprador +
+            ", lamentablemente no hay tickets suficientes. Quedan: " +
             stock +
-            " E intentaste comprar: " +
-            vendidas
+            ", e intentaste comprar: " +
+            vendidas,
+          "error"
         );
       }
     }, 1300);

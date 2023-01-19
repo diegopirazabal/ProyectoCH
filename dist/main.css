@@ -1,3 +1,24 @@
+#medio {
+  display: flex;
+  
+}
+
+#artista {
+  width: 250px;
+  float: left;
+  align-items: center;
+  text-align: center;
+}
+
+table {
+  margin-top: 150px;
+  
+}
+
+#entradas {
+  width: 700px;
+}
+
 .lv-hide {
   display:none;
 }

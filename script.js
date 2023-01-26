@@ -73,6 +73,24 @@ function revisarStock(stock, cantidad) {
     }, 1000);
   });
 }
+function calcular(cantidad){
+  return stock >= cantidad
+}
+
+function revisarStock(vendidas) {
+  return calcular(vendidas)
+}
+
+// Otros ejemplos de funciones de alto rango, sin embargo estos devolvian "(stock) => stock >= cantidad;" en vez del esperado "true" o "false"
+// function revisarStock(cantidad) {
+//   return (stock) => stock >= cantidad;
+// }
+
+// function revisarStock(cantidad) {
+//   return function calc(stock) { return stock >= cantidad };
+// }
+
+
 // Output
 function respuesta(qty, total) {
   let compradores = localStorage.getItem("comprador");
@@ -91,7 +109,7 @@ function respuesta(qty, total) {
     data.menor * 149 +
     "). " +
     data.ninio +
-    " Ticket(s) de Ninio ($0) para el toque de : " + artista + " - Total: $" +
+    " Ticket(s) de Ninio ($0) para el toque de: " + artista + " - Total: $" +
     total);
 }
 // Listener del boton de compra, Llama a las funciones indicadas para generar la salida correspondiente.
@@ -111,12 +129,10 @@ submitBtn.addEventListener("click", function () {
       parseInt(adultos.value) +
       parseInt(menores.value) +
       parseInt(ninios.value);
-    let vendible = 0;
-    revisarStock(stock, vendidas).then((response) => {
-      vendible = response;
-    });
+    let vendible;
+    vendible = revisarStock(vendidas)
     setTimeout(() => {
-      if (vendible == 1) {
+      if (vendible) {
         stock = stock - vendidas;
         let compra = {
           adulto: adultos.value,

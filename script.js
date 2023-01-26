@@ -12,31 +12,31 @@ let loadingBar = document.getElementById("barraCarga");
 let buitres = document.getElementById("bui");
 let cuarteto = document.getElementById("cds");
 let ntvg = document.getElementById("ntvg");
-let artista= "";
+let artista = "";
 
 // Titulo
 titulo.innerHTML = "Bienvenido, para comprar tickets selecciona un artista";
 // //Eleccion de artista
 
 ntvg.addEventListener("click", async () => {
-  const resp = await fetch('bandas.json');
+  const resp = await fetch("bandas.json");
   const data = await resp.json();
-  titulo.innerHTML = "Tickets para " + data[0].banda
-  localStorage.setItem("artista", data[0].banda)
+  titulo.innerHTML = "Tickets para " + data[0].banda;
+  localStorage.setItem("artista", data[0].banda);
 });
 
 cuarteto.addEventListener("click", async () => {
-  const resp = await fetch('bandas.json');
+  const resp = await fetch("bandas.json");
   const data = await resp.json();
-  titulo.innerHTML = "Tickets para " + data[1].banda
-  localStorage.setItem("artista", data[1].banda)
+  titulo.innerHTML = "Tickets para " + data[1].banda;
+  localStorage.setItem("artista", data[1].banda);
 });
 
 buitres.addEventListener("click", async () => {
-  const resp = await fetch('bandas.json');
+  const resp = await fetch("bandas.json");
   const data = await resp.json();
-  titulo.innerHTML = "Tickets para " + data[2].banda
-  localStorage.setItem("artista", data[2].banda)
+  titulo.innerHTML = "Tickets para " + data[2].banda;
+  localStorage.setItem("artista", data[2].banda);
 });
 
 // ---------------- Codigo Funcional Descartado ---------------- //
@@ -50,6 +50,7 @@ buitres.addEventListener("click", async () => {
 //   }
 // })
 // ------------------------------------------------------------- //
+
 // Funcion que almacena el nombre ingresado por el usuario en el LocalStorage
 function guardarNombre(nombre) {
   localStorage.setItem("comprador", document.getElementById("nombre").value);
@@ -73,23 +74,22 @@ function revisarStock(stock, cantidad) {
     }, 1000);
   });
 }
-function calcular(cantidad){
-  return stock >= cantidad
+function calcular(cantidad) {
+  return stock >= cantidad;
 }
 
 function revisarStock(vendidas) {
-  return calcular(vendidas)
+  return calcular(vendidas);
 }
 
 // Otros ejemplos de funciones de alto rango, sin embargo estos devolvian "(stock) => stock >= cantidad;" en vez del esperado "true" o "false"
+
 // function revisarStock(cantidad) {
 //   return (stock) => stock >= cantidad;
 // }
-
 // function revisarStock(cantidad) {
 //   return function calc(stock) { return stock >= cantidad };
 // }
-
 
 // Output
 function respuesta(qty, total) {
@@ -109,7 +109,9 @@ function respuesta(qty, total) {
     data.menor * 149 +
     "). " +
     data.ninio +
-    " Ticket(s) de Ninio ($0) para el toque de: " + artista + " - Total: $" +
+    " Ticket(s) de Ninio ($0) para el toque de: " +
+    artista +
+    " - Total: $" +
     total);
 }
 // Listener del boton de compra, Llama a las funciones indicadas para generar la salida correspondiente.
@@ -130,7 +132,7 @@ submitBtn.addEventListener("click", function () {
       parseInt(menores.value) +
       parseInt(ninios.value);
     let vendible;
-    vendible = revisarStock(vendidas)
+    vendible = revisarStock(vendidas);
     setTimeout(() => {
       if (vendible) {
         stock = stock - vendidas;
@@ -146,7 +148,7 @@ submitBtn.addEventListener("click", function () {
           respuesta(totalTickets, totalPrecio);
         }, 2000);
       } else {
-        let comprador = localStorage.getItem("comprador")
+        let comprador = localStorage.getItem("comprador");
         Swal.fire(
           "Error",
           comprador +

@@ -12,28 +12,44 @@ let loadingBar = document.getElementById("barraCarga");
 let buitres = document.getElementById("bui");
 let cuarteto = document.getElementById("cds");
 let ntvg = document.getElementById("ntvg");
+let artista= "";
 
-//Titulo
+// Titulo
 titulo.innerHTML = "Bienvenido, para comprar tickets selecciona un artista";
-//Eleccion de artista
-ntvg.addEventListener("click", () => {
-  fetch("bandas.json")
-    .then((response) => response.json())
-    .then((data) => (titulo.innerHTML = "Tickets para " + data[0].banda));
+// //Eleccion de artista
+
+ntvg.addEventListener("click", async () => {
+  const resp = await fetch('bandas.json');
+  const data = await resp.json();
+  titulo.innerHTML = "Tickets para " + data[0].banda
+  localStorage.setItem("artista", data[0].banda)
 });
 
-cuarteto.addEventListener("click", () => {
-  fetch("bandas.json")
-    .then((response) => response.json())
-    .then((data) => (titulo.innerHTML = "Tickets para " + data[1].banda));
+cuarteto.addEventListener("click", async () => {
+  const resp = await fetch('bandas.json');
+  const data = await resp.json();
+  titulo.innerHTML = "Tickets para " + data[1].banda
+  localStorage.setItem("artista", data[1].banda)
 });
 
-buitres.addEventListener("click", () => {
-  fetch("bandas.json")
-    .then((response) => response.json())
-    .then((data) => (titulo.innerHTML = "Tickets para " + data[2].banda));
+buitres.addEventListener("click", async () => {
+  const resp = await fetch('bandas.json');
+  const data = await resp.json();
+  titulo.innerHTML = "Tickets para " + data[2].banda
+  localStorage.setItem("artista", data[2].banda)
 });
 
+// ---------------- Codigo Funcional Descartado ---------------- //
+// ntvg.addEventListener("click", async function getData() {
+//   try {
+//     const response = await fetch('bandas.json');
+//     const data = await response.json();
+//     titulo.innerHTML = "Tickets para " + data[0].banda
+//   } catch (error) {
+//     console.log(error);
+//   }
+// })
+// ------------------------------------------------------------- //
 // Funcion que almacena el nombre ingresado por el usuario en el LocalStorage
 function guardarNombre(nombre) {
   localStorage.setItem("comprador", document.getElementById("nombre").value);
@@ -46,14 +62,6 @@ function calcPrice(qty, price) {
 function revisarStock(stock, cantidad) {
   return new Promise((resolve, reject) => {
     let diferencia = stock - cantidad;
-    console.log(
-      "stock: " +
-        stock +
-        " diferencia = " +
-        diferencia +
-        " cantidad = " +
-        cantidad
-    );
     setTimeout(() => {
       if (diferencia >= 0) {
         stock = diferencia;
@@ -68,9 +76,8 @@ function revisarStock(stock, cantidad) {
 // Output
 function respuesta(qty, total) {
   let compradores = localStorage.getItem("comprador");
-  let artista = localStorage.getItem("toque1");
+  let artista = localStorage.getItem("artista");
   let data = localStorage.getItem("data");
-  artista = JSON.parse(artista);
   data = JSON.parse(data);
   return (output.innerHTML =
     compradores +
@@ -84,7 +91,7 @@ function respuesta(qty, total) {
     data.menor * 149 +
     "). " +
     data.ninio +
-    " Ticket(s) de Ninio ($0) - Total: $" +
+    " Ticket(s) de Ninio ($0) para el toque de : " + artista + " - Total: $" +
     total);
 }
 // Listener del boton de compra, Llama a las funciones indicadas para generar la salida correspondiente.
